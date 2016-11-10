@@ -144,7 +144,6 @@
       if (!element.length) {
         return;
       }
-      console.log(element);
       $('.' + currentCls).removeClass(currentCls);
       element.addClass(currentCls);
       if (element.hasClass('story')) {
