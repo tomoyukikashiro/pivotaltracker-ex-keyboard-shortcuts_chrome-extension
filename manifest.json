@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "Pivotaltracker Extra Keyboard Shortcuts",
+  "description": "Allow you to use more keyboard shortcuts",
+  "author": "Tomoyuki Kashiro",
+  "version": "1.0",
+  "icons": {
+    "16": "images/icon_16.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  },
+  "browser_action": {
+    "default_icon": "images/icon_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.pivotaltracker.com/n/workspaces/*",
+        "https://www.pivotaltracker.com/n/projects/*"
+      ],
+      "css": ["styles/main.css"],
+      "js": ["scripts/jquery-3.1.1.min.js", "scripts/main.js"]
+    }
+  ],
+  "permissions": [
+    "https://www.pivotaltracker.com/n/workspaces/*",
+    "https://www.pivotaltracker.com/n/projects/*"
+  ]
+}
