@@ -8,10 +8,12 @@ Check [Chrome web store](https://chrome.google.com/webstore/detail/pivotaltracke
 
 ## Shortcuts
 
-| shortcut | command |
-| ------------- | ------------- |
-| h  | move panel left |
-| l  | move panel right|
-| j  | move story down |
-| k  | move story up   |
-| o  | toggle story  |
+| shortcut | command | note |
+| ------------- | ------------- | |
+| h  | move panel left | |
+| l  | move panel right| |
+| j  | move story down | |
+| k  | move story up   | |
+| o  | toggle story  | |
+| shift + o  | toggle story fullscreen  | |
+| cmd + s  | save all open stories  | when any input elements do not have focus |
