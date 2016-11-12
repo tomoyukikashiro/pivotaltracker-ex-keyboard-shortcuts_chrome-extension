@@ -148,8 +148,23 @@
       element.addClass(currentCls);
       if (element.hasClass('story')) {
         currentStoryId = element.data('id');
+        this.scrollByVisible(element);
       } else if (element.hasClass('panel')) {
         currentPanelId = element.attr('id');
+      }
+    };
+
+    this.scrollByVisible = function(element) {
+      var scrollElm = this.getCurrentPanel().find('[data-scrollable]');
+      var scrollElmTop = scrollElm[0].getBoundingClientRect().top;
+      var wH = window.innerHeight;
+      var eH = element.height();
+      var eTop = element[0].getBoundingClientRect().top;
+      var eBottom = eTop + eH;
+      if (eBottom > wH) {
+        scrollElm.scrollTop(scrollElm.scrollTop() + (eBottom - wH));
+      } else if (eTop < scrollElmTop) {
+        scrollElm.scrollTop(scrollElm.scrollTop() - (scrollElmTop - eTop));
       }
     };
   }
