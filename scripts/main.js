@@ -4,13 +4,34 @@
     var pivotal = new Pivotal();
     var settings = [
       {h: movePanel.bind(null, true)},
-      {j: moveStory},
+      {j: moveStory.bind(null, false)},
       {k: moveStory.bind(null, true)},
-      {l: movePanel},
+      {l: movePanel.bind(null, false)},
       {o: toggleStory},
-      {O: toggleFullStory, shift: true}
+      {O: toggleFullStory, shift: true},
+      {s: saveStories, meta: true}
     ];
     addKeyboardShortcuts(settings);
+
+    function saveStories(e) {
+      var allStories = pivotal.getAllStories();
+      var count = 0
+      allStories.each(function(i, story) {
+        story = $(story);
+        if (pivotal.isStoryOpened(story)) {
+          // when we close story that will be saved
+          pivotal.closeStory(story);
+          count++;
+        }
+      });
+      if (count) {
+        var unit = count > 1 ? ' stories' : ' story';
+        window.alert('Saved ' +  count + ' open ' + unit);
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      return; 
+    }
 
     function toggleStory() {
       var currentPanel= pivotal.getCurrentPanel();
@@ -43,6 +64,7 @@
     }
 
     function moveStory(isPrev) {
+      console.log(arguments);
       if (!pivotal.hasPanels()) {
         return;
       }
@@ -80,8 +102,8 @@
         return;
       }
       settings.forEach(function(s) {
-        if (s[e.key] && !!s['shift'] === !!e.shiftKey) {
-          s[e.key]();
+        if (s[e.key] && !!s['shift'] === !!e.shiftKey && !!s['meta'] === !!e.metaKey) {
+          s[e.key](e);
         }
       });
     });
@@ -118,6 +140,9 @@
     this.movePanelPrev = function(current) {
       this.movePanel(current, true);
     };
+    this.getAllStories = function() {
+      return $(storySelector); 
+    };
     this.getStories = function(currentPanel) {
       return currentPanel.find(storySelector); 
     };
@@ -141,6 +166,7 @@
       return !story.find('header.preview').length;
     };
     this.toggleStory = function(currentPanel) {
+      // story element is different after toggle so we need to get for each.
       var self = this;
       var openButton = this.getCurrentStory(currentPanel).find('a.expander')[0]; 
       var closeButton = $('a.collapser')[0]; 
@@ -150,6 +176,12 @@
         setTimeout(function() {
           self.getCurrentStory(currentPanel).addClass(currentCls);
         }, 100);
+      } 
+    };
+    this.closeStory = function(story) {
+      var button = $('a.collapser')[0]; 
+      if (button) {
+        button.click();
       } 
     };
     this.toggleFullStory = function(currentPanel) {
