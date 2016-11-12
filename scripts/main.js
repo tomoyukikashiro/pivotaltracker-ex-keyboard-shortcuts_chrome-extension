@@ -7,7 +7,8 @@
       {j: moveStory},
       {k: moveStory.bind(null, true)},
       {l: movePanel},
-      {o: toggleStory}
+      {o: toggleStory},
+      {O: toggleFullStory, shift: true}
     ];
     addKeyboardShortcuts(settings);
 
@@ -31,6 +32,14 @@
         }
         moveStory();
       }
+    }
+
+    function toggleFullStory() {
+      var currentPanel = pivotal.getCurrentPanel();
+      if (!currentPanel.length || !pivotal.getCurrentStory(currentPanel).length) {
+        return;
+      }
+      pivotal.toggleFullStory(currentPanel);
     }
 
     function moveStory(isPrev) {
@@ -57,6 +66,7 @@
         }
       }
     }
+
   });
 
   /**
@@ -70,7 +80,7 @@
         return;
       }
       settings.forEach(function(s) {
-        if (s[e.key]) {
+        if (s[e.key] && !!s['shift'] === !!e.shiftKey) {
           s[e.key]();
         }
       });
@@ -127,6 +137,9 @@
     this.moveStoryPrev = function(current) {
       this.moveStory(current, true);
     };
+    this.isStoryOpened = function(story) {
+      return !story.find('header.preview').length;
+    };
     this.toggleStory = function(currentPanel) {
       var self = this;
       var openButton = this.getCurrentStory(currentPanel).find('a.expander')[0]; 
@@ -138,6 +151,32 @@
           self.getCurrentStory(currentPanel).addClass(currentCls);
         }, 100);
       } 
+    };
+    this.toggleFullStory = function(currentPanel) {
+      var self = this;
+      var currentStory = this.getCurrentStory(currentPanel);
+      var fullscreenCloseButton = $('#maximizes_show a.minimize');
+      if (fullscreenCloseButton.length) {
+        // if story is fullscreen -> open
+        fullscreenCloseButton[0].click();
+        return;
+      }
+      if (this.isStoryOpened(currentStory)) {
+        // if story is opened -> fullscreen
+        makeFullScreen();
+      } else {
+        // if story is closed -> open -> fullscreen
+        this.toggleStory(currentPanel);
+        setTimeout(function() {
+          makeFullScreen();
+        }, 100);
+      }
+
+      function makeFullScreen() {
+        self.getCurrentStory(currentPanel).find('[id^=story_maximize_]')[0].click();
+        $('.edit.details').scrollTop(0);
+        document.activeElement.blur();
+      }
     };
 
     this.focusElement = function(element) {
