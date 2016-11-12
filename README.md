@@ -9,7 +9,7 @@ Check [Chrome web store](https://chrome.google.com/webstore/detail/pivotaltracke
 ## Shortcuts
 
 | shortcut | command | note |
-| ------------- | ------------- | |
+| ------------- | ------------- | ---------- |
 | h  | move panel left | |
 | l  | move panel right| |
 | j  | move story down | |
