@@ -10,3 +10,26 @@
   background-color: red;
   z-index: 1;
 }
+
+.pteks-copy-buttons {
+  position: absolute;
+  bottom: 3px; left: 5px;
+}
+
+.pteks-url, .pteks-id {
+  outline: none;
+  opacity: .7;
+  border: 1px solid #999;
+  height: 18px;
+  width: 18px;
+  cursor: pointer;
+}
+.pteks-url:active, .pteks-id:active {
+  background-color: #999;
+}
+.pteks-url{
+  background: url(//d1x0rkxtisrwrz.cloudfront.net/next/assets/next/fbc405c4-small-link.svg) no-repeat 50%;
+}
+.pteks-id{
+  background: url(//d1x0rkxtisrwrz.cloudfront.net/next/assets/next/d1d95891-story-id.svg) no-repeat 50%;
+}
