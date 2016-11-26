@@ -12,6 +12,7 @@
       {s: saveStories, meta: true}
     ];
     addKeyboardShortcuts(settings);
+    addHoverStory(pivotal);
 
     function saveStories(e) {
       var allStories = pivotal.getAllStories();
@@ -64,7 +65,6 @@
     }
 
     function moveStory(isPrev) {
-      console.log(arguments);
       if (!pivotal.hasPanels()) {
         return;
       }
@@ -107,6 +107,12 @@
         }
       });
     });
+  }
+
+  function addHoverStory(pivotal) {
+    $(document.body).on('mouseenter', '.panels .panel.visible .story[data-cid][data-id]', function() {
+      pivotal.addExtraCopybuttons($(this));
+    }); 
   }
 
   function Pivotal() {
@@ -210,7 +216,20 @@
         document.activeElement.blur();
       }
     };
-
+    /**
+     * add copy to url / story id to clipboard
+     */
+    this.addExtraCopybuttons = function($elm) {
+      var id = $elm.data('id');
+      var cls = 'pteks-copy-buttons';
+      if ($elm.find(`.${cls}`).length) {
+        return;
+      }
+      var buttons = `<span class="${cls}"><button type="button" title="Copy this story's link to your clipboard" data-clipboard-text="https://www.pivotaltracker.com/story/show/${id}" class="pteks-url autosaves clipboard_button hoverable link left_endcap" tabindex="-1"></button>
+      <button type="button" title="Copy this story's ID to your clipboard" data-clipboard-text="#${id}" class="pteks-id autosaves clipboard_button hoverable id use_click_to_copy" tabindex="-1"></button></span>
+      `;
+      $elm.find('header.preview').append(buttons);
+    };
     this.focusElement = function(element) {
       if (!element.length) {
         return;

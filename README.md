@@ -17,3 +17,7 @@ Check [Chrome web store](https://chrome.google.com/webstore/detail/pivotaltracke
 | o  | toggle story  | |
 | shift + o  | toggle story fullscreen  | |
 | cmd + s  | save all open stories  | when any input elements do not have focus |
+
+## Extra Functions
+
+- add `copy story id / url to clipboard` button to closed stories.
