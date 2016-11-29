@@ -1,4 +1,4 @@
-# pivotaltracker ex keyboard shortcuts
+# Pivotal Tracker ex keyboard shortcuts
 
 This is a chrome extention that allow you to use more keyboard shortcuts.
 
