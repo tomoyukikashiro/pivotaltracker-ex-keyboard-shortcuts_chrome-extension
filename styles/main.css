@@ -16,7 +16,7 @@
   bottom: 3px; left: 5px;
 }
 
-.pteks-url, .pteks-id {
+.pteks-url, .pteks-id, .pteks-md, .pteks-rt{
   outline: none;
   opacity: .7;
   border: 1px solid #999;
@@ -33,3 +33,16 @@
 .pteks-id{
   background: url(//d1x0rkxtisrwrz.cloudfront.net/next/assets/next/d1d95891-story-id.svg) no-repeat 50%;
 }
+.pteks-md, .pteks-rt{
+  background: url(//d1x0rkxtisrwrz.cloudfront.net/next/assets/next/9db8345c-clone-stories.svg) no-repeat 50%;
+}
+
+.pteks-rt > * {
+  display: none;
+}
+
+/* override */
+.story .preview .name {
+  margin-left: 90px !important;
+}
+

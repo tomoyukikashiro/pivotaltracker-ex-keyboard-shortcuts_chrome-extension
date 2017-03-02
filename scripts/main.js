@@ -221,14 +221,24 @@
      */
     this.addExtraCopybuttons = function($elm) {
       var id = $elm.data('id');
+      var name = $elm.find('.story_name').text();
       var cls = 'pteks-copy-buttons';
+      var url = `https://www.pivotaltracker.com/story/show/${id}`;
       if ($elm.find(`.${cls}`).length) {
         return;
       }
-      var buttons = `<span class="${cls}"><button type="button" title="Copy this story's link to your clipboard" data-clipboard-text="https://www.pivotaltracker.com/story/show/${id}" class="pteks-url autosaves clipboard_button hoverable link left_endcap" tabindex="-1"></button>
-      <button type="button" title="Copy this story's ID to your clipboard" data-clipboard-text="#${id}" class="pteks-id autosaves clipboard_button hoverable id use_click_to_copy" tabindex="-1"></button></span>
+      var buttons = `<span class="${cls}">
+        <button type="button" title="Copy this story's link to your clipboard" data-clipboard-text="${url}" class="pteks-url autosaves clipboard_button hoverable link left_endcap" tabindex="-1"></button>
+        <button type="button" title="Copy this story's ID to your clipboard" data-clipboard-text="#${id}" class="pteks-id autosaves clipboard_button hoverable id use_click_to_copy" tabindex="-1"></button>
+        <button type="button" title="Copy this story's URL as markdown to your clipboard" data-clipboard-text="[${name}](${url})" class="pteks-md autosaves clipboard_button hoverable left_endcap" tabindex="-1"></button>
+        <button type="button" title="Copy this story's URL as rich text to your clipboard" data-clipboard-element="#pteks-clipboard-richtext-${id}" class="pteks-rt hoverable left_endcap" tabindex="-1"><a id="pteks-clipboard-richtext-${id}" href="${url}">${name}</a></button>
+      </span>
       `;
       $elm.find('header.preview').append(buttons);
+      $elm.on('click', '[data-clipboard-element]', function() {
+        var copyElm = $($elm.find('[data-clipboard-element]').data('clipboard-element'))[0];
+        clipboard.copy(copyElm);
+      });
     };
     this.focusElement = function(element) {
       if (!element.length) {
